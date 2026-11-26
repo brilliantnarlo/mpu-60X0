@@ -2,6 +2,8 @@
 #include "verilated.h"
 
 #include <iostream>
+#include <bitset>
+#include <iomanip>
 
 
 double sc_time_stamp() {
@@ -13,18 +15,33 @@ int main(int argc, char** argv) {
 
     VerilatedContext context;
 
-    Vsim_top* top = new Vsim_top(&context);
+    Vsim_top top(&context);
 
-    top->clk   = 0;
-    top->reset = 1;
-    top->jump  = 0;
-    top->jump_address = 0;
+    top.clk = 0;
+    top.reset = 0;
+    top.jump = 0;
+    top.jump_address = 0;
+    top.eval();
 
-    top->eval();
+    top.reset = 1;
+    top.eval();
 
     std::cout << "Simulation started" << std::endl;
+    std::cout << "PC_OUT: " << std::bitset<8>(top.pc_out)
+          << " (0x" << std::hex << std::setw(2) << std::setfill('0')
+          << static_cast<unsigned>(top.pc_out)
+          << std::dec << std::setfill(' ') << ")\n";
 
-    std::cout << "PC_OUT: " << top->pc_out << std::endl;
+    top.reset = 0;
+    top.eval();
+    top.clk = 1;
+    top.eval();
+
+    std::cout << "PC_OUT: " << std::bitset<8>(top.pc_out)
+          << " (0x" << std::hex << std::setw(2) << std::setfill('0')
+          << static_cast<unsigned>(top.pc_out)
+          << std::dec << std::setfill(' ') << ")\n";
+    top.final();
 
     return 0;
 
