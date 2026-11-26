@@ -18,6 +18,8 @@ module id_main(
 
     output reg [1:0] RESERVED
 
+    output reg [63:0] system_status
+
 );
 
 always @(*) begin
@@ -38,6 +40,8 @@ always @(*) begin
     ZA_A = 0;
 
     RESERVED = 0;
+
+    system_status = 64'b0;
 
     case (address)
 
@@ -61,6 +65,11 @@ always @(*) begin
             XA_A = instr[5:4];
             YA_A = instr[3:2];
             ZA_A = instr[1:0];
+        end
+
+        // System status response
+        8'h11: begin
+            system_status = 64'h53595354454D204F;
         end
 
         default: begin
