@@ -1,4 +1,3 @@
-
 module self_test_x(
 
     input wire [7:0] write_data,
