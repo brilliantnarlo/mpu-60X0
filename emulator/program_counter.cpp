@@ -1,16 +1,10 @@
 #include "program_counter.h"
 
-#include "Vsim_top.h"
-#include "verilated.h"
 
-#include <bitset>
-#include <iomanip>
-#include <iostream>
 
 
 void ProgramCounter::start() {
 
-    VerilatedContext context;
 
     Vsim_top top(&context);
 
