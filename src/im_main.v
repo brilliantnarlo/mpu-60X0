@@ -16,8 +16,8 @@ module im_main#(
 
 
 	always @(*) begin
-		if (rom < DEPTH)
-			instr <= rom;
+		if (pc_out < DEPTH)
+			instr <= rom[pc_out];
 		else
 			instr <= 9'b0;
 	end
