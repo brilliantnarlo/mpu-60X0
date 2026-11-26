@@ -11,12 +11,12 @@ module main();
         .pc_out(pc_out) // output
     );
 
-    im_main(
+    address_memory(
         .pc_out(pc_out) // input
         .instr(instr)
     );
 
-    id_main(
+    address_decoder(
         .address(address),
         .instr(instr),
 
@@ -36,7 +36,7 @@ module main();
         .RESERVED(RESERVED)
     );
 
-    
+
 
 
 endmodule
