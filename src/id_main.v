@@ -4,7 +4,7 @@ module id_main(
 	input wire SELF_TEST_X,
 	output reg [4:0] XG_TEST,
 	output reg [2:0] XA_TEST,
-	output reg [1:0] RW
+	output reg [1:0] RW,
 
 	input wire SELF_TEST_Y,
 	output reg [4:0] YG_TEST,
