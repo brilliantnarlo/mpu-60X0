@@ -1,2 +1,5 @@
 emulator/build/
 emulator/obj_dir/
+
+emulator/build
+emulator/obj_dir
