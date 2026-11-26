@@ -1,7 +1,7 @@
 module main();
 
 
-    pc_main(
+    pc_main pc(
         .clk(clk),
         .reset(reset),
 
@@ -11,12 +11,13 @@ module main();
         .pc_out(pc_out) // output
     );
 
-    address_memory(
-        .pc_out(pc_out) // input
+
+    address_memory am(
+        .pc_out(pc_out), // input
         .instr(instr)
     );
 
-    address_decoder(
+    address_decoder ad(
         .address(address),
         .instr(instr),
 

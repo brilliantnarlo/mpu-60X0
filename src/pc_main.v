@@ -6,7 +6,7 @@ module pc_main #(
     input wire reset,
 
     input wire jump,
-    input wire jump_address,
+    input wire [7:0] jump_address,
 
     output reg [7:0] pc_out
 );
