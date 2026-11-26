@@ -5,7 +5,7 @@ module pc_main #(
 	input wire clk,
 	input wire reset,
 	
-	output reg [9:0] pc_out 
+	output reg [9:0] pc_out
 );
 
 
