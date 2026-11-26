@@ -1,30 +1,29 @@
 module id_main(
-    input wire [9:0] instr,
 
-    input wire SELF_TEST_X,
+    input wire [7:0] address,
+    input wire [7:0] instr,
+
     output reg [4:0] XG_TEST,
     output reg [2:0] XA_TEST,
 
-    input wire SELF_TEST_Y,
     output reg [4:0] YG_TEST,
     output reg [2:0] YA_TEST,
 
-    input wire SELF_TEST_Z,
     output reg [4:0] ZG_TEST,
     output reg [2:0] ZA_TEST,
 
-    input wire SELF_TEST_A,
     output reg [1:0] XA_A,
     output reg [1:0] YA_A,
     output reg [1:0] ZA_A,
-    output reg [1:0] RESERVED,
 
-    output reg [1:0] RW
+    output reg [1:0] RESERVED
+
 );
 
 always @(*) begin
 
     // Default values
+
     XG_TEST = 0;
     XA_TEST = 0;
 
@@ -39,41 +38,36 @@ always @(*) begin
     ZA_A = 0;
 
     RESERVED = 0;
-    RW = 0;
 
-    if (SELF_TEST_X) begin
+    case (address)
 
-        XG_TEST = instr[4:0];
-        XA_TEST = instr[7:5];
-        RW      = instr[9:8];
+        8'h0D: begin
+            XA_TEST = instr[7:5];
+            XG_TEST = instr[4:0];
+        end
 
-    end
+        8'h0E: begin
+            YA_TEST = instr[7:5];
+            YG_TEST = instr[4:0];
+        end
 
-    else if (SELF_TEST_Y) begin
+        8'h0F: begin
+            ZA_TEST = instr[7:5];
+            ZG_TEST = instr[4:0];
+        end
 
-        YG_TEST = instr[4:0];
-        YA_TEST = instr[7:5];
-        RW      = instr[9:8];
+        8'h10: begin
+            RESERVED = instr[7:6];
+            XA_A = instr[5:4];
+            YA_A = instr[3:2];
+            ZA_A = instr[1:0];
+        end
 
-    end
+        default: begin
+            // Keep default values
+        end
 
-    else if (SELF_TEST_Z) begin
-
-        ZG_TEST = instr[4:0];
-        ZA_TEST = instr[7:5];
-        RW      = instr[9:8];
-
-    end
-
-    else if (SELF_TEST_A) begin
-
-        ZA_A     = instr[1:0];
-        YA_A     = instr[3:2];
-        XA_A     = instr[5:4];
-        RESERVED = instr[7:6];
-        RW       = instr[9:8];
-
-    end
+    endcase
 
 end
 
