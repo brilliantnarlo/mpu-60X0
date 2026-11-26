@@ -1,4 +1,10 @@
-module main();
+module main(
+    input wire clk,
+    input wire reset,
+
+    input wire jump,
+    input wire [7:0] jump_address
+);
 
 
     pc_main pc(
@@ -21,21 +27,30 @@ module main();
         .address(address),
         .instr(instr),
 
-        .XG_TEST(XG_TEST),
-        .XA_TEST(XA_TEST),
-
-        .YG_TEST(YG_TEST),
-        .YA_TEST(YA_TEST),
-
-        .ZG_TEST(ZG_TEST),
-        .ZA_TEST(ZA_TEST),
-
-        .XA_A(XA_A),
-        .YA_A(YA_A),
-        .ZA_A(ZA_A),
-
-        .RESERVED(RESERVED)
+        .operation(operation),
+        .data(data)
     );
+
+    control_unit cu(
+        .operation(operation),
+
+        .enable_self_test_x(enable_self_test_x),
+        .enable_self_test_y(enable_self_test_y),
+        .enable_self_test_z(enable_self_test_z),
+        .enable_self_test_a(enable_self_test_a),
+        .enable_system_status(enable_system_status)
+    );
+
+
+    self_test_x test_x(
+        .write_data(write_data),
+        .enable_self_test_x(enable_self_test_x),
+
+        .XG_TEST(XG_TEST),
+        .XA_TEST(XA_TEST)
+    );
+
+
 
 
 

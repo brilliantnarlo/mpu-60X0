@@ -1,95 +1,51 @@
-module id_main(
+
+module address_decoder(
 
     input wire [7:0] address,
     input wire [7:0] instr,
 
-    output reg [4:0] XG_TEST,
-    output reg [2:0] XA_TEST,
-
-    output reg [4:0] YG_TEST,
-    output reg [2:0] YA_TEST,
-
-    output reg [4:0] ZG_TEST,
-    output reg [2:0] ZA_TEST,
-
-    output reg [1:0] XA_A,
-    output reg [1:0] YA_A,
-    output reg [1:0] ZA_A,
-
-    output reg [1:0] RESERVED
-
-    output reg [63:0] system_status
-
+    output reg [3:0] operation,
+    output reg [7:0] data
 );
 
-
-// Internal wires from self_test_x
-wire [4:0] xg_test_internal;
-wire [2:0] xa_test_internal;
-
-// Instantiate X-axis module
-self_test_x X_AXIS (
-
-    .write_data(instr),
-
-    .XG_TEST(xg_test_internal),
-    .XA_TEST(xa_test_internal)
-
-);
-
+    // Operation codes
+    localparam OP_NONE       = 4'd0;
+    localparam OP_SELF_TEST_X = 4'd1;
+    localparam OP_SELF_TEST_Y = 4'd2;
+    localparam OP_SELF_TEST_Z = 4'd3;
+    localparam OP_SELF_TEST_A = 4'd4;
+    localparam OP_SYSTEM_STATUS = 4'd5;
 
     always @(*) begin
 
         // Default values
-
-        XG_TEST = 0;
-        XA_TEST = 0;
-
-        YG_TEST = 0;
-        YA_TEST = 0;
-
-        ZG_TEST = 0;
-        ZA_TEST = 0;
-
-        XA_A = 0;
-        YA_A = 0;
-        ZA_A = 0;
-
-        RESERVED = 0;
-
-        system_status = 64'b0;
+        operation = OP_NONE;
+        data = instr;
 
         case (address)
 
             8'h0D: begin
-                XA_TEST = xa_test_internal;
-                XG_TEST = xg_test_internal;
+                operation = OP_SELF_TEST_X;
             end
 
             8'h0E: begin
-                YA_TEST = instr[7:5];
-                YG_TEST = instr[4:0];
+                operation = OP_SELF_TEST_Y;
             end
 
             8'h0F: begin
-                ZA_TEST = instr[7:5];
-                ZG_TEST = instr[4:0];
+                operation = OP_SELF_TEST_Z;
             end
 
             8'h10: begin
-                RESERVED = instr[7:6];
-                XA_A = instr[5:4];
-                YA_A = instr[3:2];
-                ZA_A = instr[1:0];
+                operation = OP_SELF_TEST_A;
             end
 
-            // System status response
             8'h11: begin
-                system_status = 64'h53595354454D204F;
+                operation = OP_SYSTEM_STATUS;
             end
 
             default: begin
-                // Keep default values
+                operation = OP_NONE;
             end
 
         endcase
