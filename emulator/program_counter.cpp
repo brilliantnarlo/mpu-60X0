@@ -1,8 +1,6 @@
 #include "program_counter.h"
 
 
-
-
 void ProgramCounter::start() {
 
 
@@ -27,7 +25,7 @@ void ProgramCounter::start() {
     top.eval();
 
     int counter = 0;
-    while (counter < 5)
+    while (counter < 20)
     {
         /* code */
         top.clk = 1;
@@ -42,6 +40,8 @@ void ProgramCounter::start() {
 
         counter++;
     }
+
+    std::cout << "Simulation ends" << std::endl;
 
     top.final();
 
