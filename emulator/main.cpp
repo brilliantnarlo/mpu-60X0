@@ -1,9 +1,5 @@
-#include "Vsim_top.h"
-#include "verilated.h"
-
-#include <iostream>
-#include <bitset>
-#include <iomanip>
+#include "main.h"
+#include "program_counter.h"
 
 
 double sc_time_stamp() {
@@ -11,50 +7,17 @@ double sc_time_stamp() {
 }
 
 
-int main(int argc, char** argv) {
+int Main::main(int argc, char** argv) {
 
-    VerilatedContext context;
-
-    Vsim_top top(&context);
-
-    top.clk = 0;
-    top.reset = 0;
-    top.jump = 0;
-    top.jump_address = 0;
-    top.eval();
-
-    top.reset = 1;
-    top.eval();
-
-    std::cout << "Simulation started" << std::endl;
-    std::cout << "PC_OUT: " << std::bitset<8>(top.pc_out)
-          << " (0x" << std::hex << std::setw(2) << std::setfill('0')
-          << static_cast<unsigned>(top.pc_out)
-          << std::dec << std::setfill(' ') << ")\n";
-
-    top.reset = 0;
-    top.eval();
-
-    int counter = 0;
-    while (counter < 5)
-    {
-        /* code */
-        top.clk = 1;
-        top.eval();
-        top.clk = 0;
-        top.eval();
-        
-        std::cout << "PC_OUT: " << std::bitset<8>(top.pc_out)
-          << " (0x" << std::hex << std::setw(2) << std::setfill('0')
-          << static_cast<unsigned>(top.pc_out)
-          << std::dec << std::setfill(' ') << ")\n";
-
-        counter++;
-    }
-
-    
-    top.final();
+    ProgramCounter program_counter;
+    program_counter.start();
 
     return 0;
 
+}
+
+
+int main(int argc, char** argv) {
+    Main app;
+    return app.main(argc, argv);
 }

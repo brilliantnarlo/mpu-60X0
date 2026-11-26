@@ -1,6 +1,1 @@
-main.o: ../main.cpp Vsim_top.h \
- C:/msys64/ucrt64/share/verilator/include/verilated.h \
- C:/msys64/ucrt64/share/verilator/include/verilated_config.h \
- C:/msys64/ucrt64/share/verilator/include/verilatedos.h \
- C:/msys64/ucrt64/share/verilator/include/verilated_types.h \
- C:/msys64/ucrt64/share/verilator/include/verilated_funcs.h
+main.o: ../main.cpp ../main.h ../program_counter.h
