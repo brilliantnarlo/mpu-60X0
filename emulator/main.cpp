@@ -1,5 +1,5 @@
 #include "main.h"
-#include "program_counter.h"
+
 
 
 double sc_time_stamp() {
@@ -9,8 +9,11 @@ double sc_time_stamp() {
 
 int Main::main(int argc, char** argv) {
 
-    ProgramCounter program_counter;
-    program_counter.start();
+    // ProgramCounter program_counter;
+    // program_counter.start();
+
+    AddressMemory address_memory;
+    address_memory.start();
 
     return 0;
 

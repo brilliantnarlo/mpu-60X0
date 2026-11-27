@@ -15,4 +15,5 @@ verilator --cc --exe --build -j 2 --top-module sim_top --Mdir build \
     sim_top.v \
     ../src/main.v \
     ../src/pc_main.v \
-    main.cpp program_counter.cpp
+    ../src/address_memory.v \
+    main.cpp program_counter.cpp address_memory.cpp
